@@ -98,7 +98,7 @@ const shareAAB = async ({ keyFilePath, packageName, filePath }) => {
 
     const { token } = await auth.getAccessToken();
 
-    const url = `${baseUploadURL}/internalappsharing/${packageName}/artifacts/bundle`
+    const url = `${baseUploadURL}/internalappsharing/${packageName}/artifacts/bundle?access_token=${token}`
 
     const file = await readFilePromise(filePath);
     const { size } = fs.statSync(filePath);
@@ -109,7 +109,7 @@ const shareAAB = async ({ keyFilePath, packageName, filePath }) => {
         'accept-encoding': 'gzip, deflate',
         Accept: '*/*',
         'Content-Type': 'application/octet-stream',
-        Authorization: token
+        Authorization: `Bearer ${token}`
       },
       maxContentLength: size * 1000,
       maxBodyLength: size * 1000
